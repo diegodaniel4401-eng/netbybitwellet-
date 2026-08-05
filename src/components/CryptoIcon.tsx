@@ -91,6 +91,16 @@ export const CryptoIcon: React.FC<CryptoIconProps> = ({
           </svg>
         );
 
+      case 'SOL':
+        return (
+          <svg viewBox="0 0 32 32" className="w-full h-full rounded-full shadow-sm">
+            <circle cx="16" cy="16" r="16" fill="#14F195" />
+            <g fill="#000000">
+              <path d="M7.5 21.5h14l3-3H10.5l-3 3zM7.5 10.5h14l3-3H10.5l-3 3zM24.5 14H10.5l-3 3h14l3-3z" />
+            </g>
+          </svg>
+        );
+
       case 'TRX':
         return (
           <svg viewBox="0 0 32 32" className="w-full h-full rounded-full shadow-sm">

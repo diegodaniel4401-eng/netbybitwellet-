@@ -19,6 +19,7 @@ export const WithdrawPage: React.FC = () => {
   const [destinationAddress, setDestinationAddress] = useState(
     user?.withdrawalAddresses?.[selectedAsset] || ''
   );
+  const [twoFactorCode, setTwoFactorCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -87,6 +88,7 @@ export const WithdrawPage: React.FC = () => {
         asset: selectedAsset,
         amount: parsedAmount,
         destinationAddress: destinationAddress.trim(),
+        twoFactorCode: user.twoFactorEnabled ? twoFactorCode.trim() : undefined,
       });
 
       await refreshUser();
@@ -95,6 +97,7 @@ export const WithdrawPage: React.FC = () => {
         text: 'Withdrawal request submitted successfully.',
       });
       setAmount('');
+      setTwoFactorCode('');
     } catch (err: any) {
       setMessage({ type: 'error', text: err.message || 'Withdrawal failed' });
     } finally {
@@ -228,6 +231,24 @@ export const WithdrawPage: React.FC = () => {
               className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2.5 text-xs text-neutral-100 font-mono focus:outline-none focus:border-amber-500/50"
             />
           </div>
+
+          {user.twoFactorEnabled && (
+            <div>
+              <label className="block text-xs font-medium text-amber-400 mb-1 flex items-center space-x-1.5">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Two-Factor Authenticator Code (2FA Required)</span>
+              </label>
+              <input
+                type="text"
+                maxLength={6}
+                required
+                value={twoFactorCode}
+                onChange={(e) => setTwoFactorCode(e.target.value.replace(/\D/g, ''))}
+                placeholder="000000"
+                className="w-full bg-neutral-950 border border-amber-500/30 rounded-xl px-4 py-2.5 text-center font-mono text-amber-400 text-sm tracking-[0.3em] focus:outline-none focus:border-amber-500"
+              />
+            </div>
+          )}
 
           <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl space-y-1 text-[11px] text-neutral-400">
             <div className="flex items-center space-x-1.5 text-amber-400 font-semibold">

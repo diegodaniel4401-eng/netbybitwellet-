@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="glow512" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad512)"/>
+  <rect width="504" height="504" x="4" y="4" rx="108" fill="none" stroke="#f59e0b" stroke-width="8" stroke-opacity="0.4"/>
+
+  <!-- Outer Ring Accent -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#goldGrad512)" stroke-width="10" stroke-dasharray="16 12" stroke-opacity="0.5"/>
+
+  <!-- Wallet / Shield Symbol -->
+  <g transform="translate(106, 106)" filter="url(#glow512)">
+    <path d="M150 20 L270 70 V160 C270 240 150 280 150 280 C150 280 30 240 30 160 V70 Z" fill="none" stroke="url(#goldGrad512)" stroke-width="20" stroke-linejoin="round"/>
+    <!-- Wallet Card / N Logo -->
+    <path d="M90 120 H210 V200 H90 Z" fill="#18181b" stroke="url(#goldGrad512)" stroke-width="14" stroke-linejoin="round"/>
+    <circle cx="170" cy="160" r="16" fill="url(#goldGrad512)"/>
+  </g>
+</svg>

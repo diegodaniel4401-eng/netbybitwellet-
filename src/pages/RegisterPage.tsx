@@ -16,7 +16,11 @@ export const RegisterPage: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    if (!email || !password || !name) {
+    const cleanEmail = email.trim();
+    const cleanName = name.trim();
+    const cleanUsername = username.trim();
+
+    if (!cleanEmail || !password || !cleanName) {
       setError('Please fill out all required fields');
       return;
     }
@@ -33,7 +37,7 @@ export const RegisterPage: React.FC = () => {
 
     setLoading(true);
     try {
-      await register(email, password, name, username);
+      await register(cleanEmail, password, cleanName, cleanUsername);
       setActivePage('dashboard');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
@@ -67,13 +71,16 @@ export const RegisterPage: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Full Name *</label>
+            <label htmlFor="reg-name" className="block text-xs font-medium text-neutral-300 mb-1">Full Name *</label>
             <div className="relative">
               <UserIcon className="w-4 h-4 text-neutral-500 absolute left-3 top-3" />
               <input
+                id="reg-name"
+                name="name"
                 type="text"
+                autoComplete="name"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -84,9 +91,12 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Username (Optional)</label>
+            <label htmlFor="reg-username" className="block text-xs font-medium text-neutral-300 mb-1">Username (Optional)</label>
             <input
+              id="reg-username"
+              name="username"
               type="text"
+              autoComplete="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="satoshi_2026"
@@ -95,11 +105,14 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Email Address *</label>
+            <label htmlFor="reg-email" className="block text-xs font-medium text-neutral-300 mb-1">Email Address *</label>
             <div className="relative">
               <Mail className="w-4 h-4 text-neutral-500 absolute left-3 top-3" />
               <input
+                id="reg-email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -110,11 +123,14 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Password *</label>
+            <label htmlFor="reg-password" className="block text-xs font-medium text-neutral-300 mb-1">Password *</label>
             <div className="relative">
               <Lock className="w-4 h-4 text-neutral-500 absolute left-3 top-3" />
               <input
+                id="reg-password"
+                name="new-password"
                 type="password"
+                autoComplete="new-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -125,11 +141,14 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Confirm Password *</label>
+            <label htmlFor="reg-confirm-password" className="block text-xs font-medium text-neutral-300 mb-1">Confirm Password *</label>
             <div className="relative">
               <Lock className="w-4 h-4 text-neutral-500 absolute left-3 top-3" />
               <input
+                id="reg-confirm-password"
+                name="confirm-password"
                 type="password"
+                autoComplete="new-password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

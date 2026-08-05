@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
+import { LiveSupportChatWidget } from './components/LiveSupportChatWidget';
 
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
@@ -18,9 +19,10 @@ import { ProfilePage } from './pages/ProfilePage';
 import { SettingsPage } from './pages/SettingsPage';
 import { CustomerSupportPage } from './pages/CustomerSupportPage';
 import { AdminPanelPage } from './pages/AdminPanelPage';
+import { AdminLoginPage } from './pages/AdminLoginPage';
 
 const AppContent: React.FC = () => {
-  const { activePage } = useAuth();
+  const { user, activePage } = useAuth();
   const [connectWalletOpen, setConnectWalletOpen] = useState(false);
 
   const renderPage = () => {
@@ -29,6 +31,8 @@ const AppContent: React.FC = () => {
         return <HomePage />;
       case 'login':
         return <LoginPage />;
+      case 'admin-login':
+        return user?.role === 'admin' ? <AdminPanelPage /> : <AdminLoginPage />;
       case 'register':
         return <RegisterPage />;
       case 'dashboard':
@@ -52,7 +56,7 @@ const AppContent: React.FC = () => {
       case 'support':
         return <CustomerSupportPage />;
       case 'admin':
-        return <AdminPanelPage />;
+        return user?.role === 'admin' ? <AdminPanelPage /> : (user ? <DashboardPage /> : <HomePage />);
       default:
         return <HomePage />;
     }
@@ -79,6 +83,9 @@ const AppContent: React.FC = () => {
         isOpen={connectWalletOpen}
         onClose={() => setConnectWalletOpen(false)}
       />
+
+      {/* Global Live Customer Support Chat Widget (Available to all visitors logged in or logged out) */}
+      <LiveSupportChatWidget />
     </div>
   );
 };

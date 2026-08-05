@@ -1,0 +1,231 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_primary",
+      "email": "netbybitsupport@gmail.com",
+      "passwordHash": "$2b$10$JowqeJ0fySGftjsJrpeOLegtjAnehxweTWy0EfdAa8WxaDDGfDNFW",
+      "name": "Platform Administrator",
+      "username": "netbybit_admin",
+      "role": "admin",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+      "balances": {
+        "BTC": 1.25,
+        "ETH": 15.5,
+        "BNB": 45,
+        "SOL": 85,
+        "TRX": 12500,
+        "USDT_ERC20": 25000,
+        "USDT_TRC20": 15000
+      },
+      "withdrawalAddresses": {
+        "BTC": "1Fy9Up78qVeawXCLnAqcnRJrvjiXLJF21d",
+        "ETH": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+        "BNB": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+        "SOL": "7XwK3nJ5pM4q2yZ8vW9R1t6Y3u0I2o8P4s5D6f7G8h9J",
+        "TRX": "TYKh3ktyqwNMUYoo89UrMbdqjV3CUKWQ8M",
+        "USDT_ERC20": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+        "USDT_TRC20": "TYKh3ktyqwNMUYoo89UrMbdqjV3CUKWQ8M"
+      },
+      "status": "active",
+      "createdAt": "2026-08-04T13:00:23.189Z"
+    },
+    {
+      "id": "usr_demo_trader_1",
+      "email": "trader@netbybit.com",
+      "passwordHash": "$2b$10$Vt2HntPKdUgakzOs.u3pYe4s5ni5ikNZEmarQZGvdPgQXAkYUhFJi",
+      "name": "Demo Trader",
+      "username": "trader",
+      "role": "user",
+      "avatar": "",
+      "balances": {
+        "BTC": 0.5,
+        "ETH": 2,
+        "BNB": 5,
+        "SOL": 10,
+        "TRX": 1000,
+        "USDT_ERC20": 2500,
+        "USDT_TRC20": 2500
+      },
+      "withdrawalAddresses": {
+        "BTC": "",
+        "ETH": "",
+        "BNB": "",
+        "SOL": "",
+        "TRX": "",
+        "USDT_ERC20": "",
+        "USDT_TRC20": ""
+      },
+      "status": "active",
+      "createdAt": "2026-08-04T13:00:23.340Z"
+    },
+    {
+      "id": "usr_1785848427257_rqr81",
+      "email": "testuser99@gmail.com",
+      "passwordHash": "$2b$10$fQgds1NJ.O6oJLzw7U9wnew0KPIwFMIsl/QTVjhr9KxVArzzxYZKy",
+      "name": "Test User",
+      "username": "testuser99",
+      "role": "user",
+      "emailVerified": false,
+      "verificationCode": "826447",
+      "avatar": "",
+      "balances": {
+        "BTC": 0,
+        "ETH": 0,
+        "BNB": 0,
+        "SOL": 0,
+        "TRX": 0,
+        "USDT_ERC20": 0,
+        "USDT_TRC20": 0
+      },
+      "withdrawalAddresses": {
+        "BTC": "",
+        "ETH": "",
+        "BNB": "",
+        "SOL": "",
+        "TRX": "",
+        "USDT_ERC20": "",
+        "USDT_TRC20": ""
+      },
+      "status": "active",
+      "createdAt": "2026-08-04T13:00:27.257Z"
+    }
+  ],
+  "depositAddresses": {
+    "BTC": "1Fy9Up78qVeawXCLnAqcnRJrvjiXLJF21d",
+    "ETH": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+    "BNB": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+    "SOL": "7XwK3nJ5pM4q2yZ8vW9R1t6Y3u0I2o8P4s5D6f7G8h9J",
+    "TRX": "TYKh3ktyqwNMUYoo89UrMbdqjV3CUKWQ8M",
+    "USDT_ERC20": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+    "USDT_TRC20": "TYKh3ktyqwNMUYoo89UrMbdqjV3CUKWQ8M"
+  },
+  "transactions": [],
+  "supportTickets": [],
+  "notifications": [],
+  "auditLogs": [
+    {
+      "id": "aud_1785848514426_exkm",
+      "date": "2026-08-04T13:01:54.426Z",
+      "action": "AUTH: LOGIN_SUCCESS",
+      "adminEmail": "SYSTEM_AUTH",
+      "userEmail": "netbybitsupport@gmail.com",
+      "asset": "SECURITY",
+      "amount": 0,
+      "status": "completed",
+      "details": "Successful authentication for user ID usr_admin_primary"
+    },
+    {
+      "id": "aud_1785848427257_b9ir",
+      "date": "2026-08-04T13:00:27.257Z",
+      "action": "AUTH: REGISTER_SUCCESS",
+      "adminEmail": "SYSTEM_AUTH",
+      "userEmail": "testuser99@gmail.com",
+      "asset": "SECURITY",
+      "amount": 0,
+      "status": "completed",
+      "details": "Account successfully created with unique ID usr_1785848427257_rqr81"
+    },
+    {
+      "id": "aud_1785848423463_h2cw",
+      "date": "2026-08-04T13:00:23.463Z",
+      "action": "AUTH: LOGIN_SUCCESS",
+      "adminEmail": "SYSTEM_AUTH",
+      "userEmail": "netbybitsupport@gmail.com",
+      "asset": "SECURITY",
+      "amount": 0,
+      "status": "completed",
+      "details": "Successful authentication for user ID usr_admin_primary"
+    }
+  ],
+  "emailLogs": [
+    {
+      "id": "eml_1785848514448_kd9h",
+      "from": "netbybitsupport@gmail.com",
+      "to": "netbybitsupport@gmail.com",
+      "subject": "Security Alert: New Login to Your NETBYBIT Account",
+      "category": "Login Security Alert",
+      "body": "Hello Platform Administrator,\n\nA new login to your NETBYBIT account was detected.\n\nAccount Email: netbybitsupport@gmail.com\nLogin Date & Time: 8/4/2026, 1:01:54 PM\nSender Address: netbybitsupport@gmail.com\n\nIf this was you, no further action is required. If you did not initiate this login, please reset your password immediately and contact netbybitsupport@gmail.com.\n\nThank you,\nNETBYBIT Support Team",
+      "html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Security Alert: New Login to Your NETBYBIT Account</title>\n</head>\n<body style=\"background-color: #09090b; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px 10px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; background-color: #121215; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);\">\n    \n    <!-- Header Banner -->\n    <div style=\"background-color: #0d0d0f; padding: 24px 32px; border-bottom: 1px solid #27272a; text-align: center;\">\n      <div style=\"display: inline-flex; align-items: center; justify-content: center;\">\n        <span style=\"font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #ffffff;\">NET<span style=\"color: #f59e0b;\">BYBIT</span></span>\n      </div>\n      <span style=\"display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #71717a; margin-top: 4px;\">Institutional Digital Asset Infrastructure</span>\n    </div>\n\n    <!-- Category Header Bar -->\n    <div style=\"background-color: #18181b; padding: 12px 32px; border-bottom: 1px solid #27272a; display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 11px; font-weight: 700; text-transform: uppercase; color: #f59e0b; background: rgba(245, 158, 11, 0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.2);\">\n        Login Security Alert\n      </span>\n      <span style=\"font-size: 11px; color: #71717a;\">Aug 4, 2026</span>\n    </div>\n\n    <!-- Body Container -->\n    <div style=\"padding: 32px;\">\n      <h1 style=\"font-size: 20px; font-weight: 700; color: #ffffff; margin-top: 0; margin-bottom: 16px; line-height: 1.3;\">\n        Security Alert: New Login to Your NETBYBIT Account\n      </h1>\n\n      \n\n      <p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Hello Platform Administrator,</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">A new login to your NETBYBIT account was detected.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Account Email: netbybitsupport@gmail.com<br/>Login Date & Time: 8/4/2026, 1:01:54 PM<br/>Sender Address: netbybitsupport@gmail.com</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">If this was you, no further action is required. If you did not initiate this login, please reset your password immediately and contact netbybitsupport@gmail.com.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Thank you,<br/>NETBYBIT Support Team</p>\n\n      \n\n      \n\n      \n\n      <div style=\"margin-top: 32px; padding-top: 20px; border-top: 1px solid #27272a; font-size: 12px; color: #9ca3af; line-height: 1.5;\">\n        <p style=\"margin: 0;\">If you have any questions or require support regarding your account, please contact customer support at <a href=\"mailto:netbybitsupport@gmail.com\" style=\"color: #f59e0b; text-decoration: none;\">netbybitsupport@gmail.com</a>.</p>\n      </div>\n    </div>\n\n    <!-- Footer -->\n    <div style=\"background-color: #09090b; padding: 24px 32px; border-top: 1px solid #27272a; text-align: center; font-size: 11px; color: #6b7280; line-height: 1.6;\">\n      <p style=\"margin: 0 0 6px 0; font-weight: 600; color: #9ca3af;\">NETBYBIT Digital Asset Management Platform</p>\n      <p style=\"margin: 0 0 10px 0;\">Official Site Contact & Admin Inbox: <span style=\"color: #d1d5db;\">netbybitsupport@gmail.com</span></p>\n      <p style=\"margin: 0; font-size: 10px; color: #4b5563;\">© 2026 NETBYBIT. All rights reserved. Encrypted SSL 256-bit Security Transport.</p>\n    </div>\n\n  </div>\n</body>\n</html>",
+      "sentAt": "2026-08-04T13:01:54.448Z",
+      "status": "Delivered",
+      "isAdminAlert": false,
+      "retryCount": 0
+    },
+    {
+      "id": "eml_1785848427259_y3ih",
+      "from": "netbybitsupport@gmail.com",
+      "to": "netbybitsupport@gmail.com",
+      "subject": "Admin Notification: New User Registration (testuser99@gmail.com)",
+      "category": "Admin Alert",
+      "body": "Admin Alert,\n\nA new user has registered on NETBYBIT.\n\nUser Details:\n- Name: Test User\n- Email: testuser99@gmail.com\n- Username: testuser99\n- Account ID: usr_1785848427257_rqr81\n- Time: 8/4/2026, 1:00:27 PM\n\nNETBYBIT Security System",
+      "html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Admin Notification: New User Registration (testuser99@gmail.com)</title>\n</head>\n<body style=\"background-color: #09090b; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px 10px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; background-color: #121215; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);\">\n    \n    <!-- Header Banner -->\n    <div style=\"background-color: #0d0d0f; padding: 24px 32px; border-bottom: 1px solid #27272a; text-align: center;\">\n      <div style=\"display: inline-flex; align-items: center; justify-content: center;\">\n        <span style=\"font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #ffffff;\">NET<span style=\"color: #f59e0b;\">BYBIT</span></span>\n      </div>\n      <span style=\"display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #71717a; margin-top: 4px;\">Institutional Digital Asset Infrastructure</span>\n    </div>\n\n    <!-- Category Header Bar -->\n    <div style=\"background-color: #18181b; padding: 12px 32px; border-bottom: 1px solid #27272a; display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 11px; font-weight: 700; text-transform: uppercase; color: #f59e0b; background: rgba(245, 158, 11, 0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.2);\">\n        Admin Alert\n      </span>\n      <span style=\"font-size: 11px; color: #71717a;\">Aug 4, 2026</span>\n    </div>\n\n    <!-- Body Container -->\n    <div style=\"padding: 32px;\">\n      <h1 style=\"font-size: 20px; font-weight: 700; color: #ffffff; margin-top: 0; margin-bottom: 16px; line-height: 1.3;\">\n        Admin Notification: New User Registration (testuser99@gmail.com)\n      </h1>\n\n      \n\n      <p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Admin Alert,</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">A new user has registered on NETBYBIT.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">User Details:<br/>- Name: Test User<br/>- Email: testuser99@gmail.com<br/>- Username: testuser99<br/>- Account ID: usr_1785848427257_rqr81<br/>- Time: 8/4/2026, 1:00:27 PM</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">NETBYBIT Security System</p>\n\n      \n\n      \n\n      \n\n      <div style=\"margin-top: 32px; padding-top: 20px; border-top: 1px solid #27272a; font-size: 12px; color: #9ca3af; line-height: 1.5;\">\n        <p style=\"margin: 0;\">If you have any questions or require support regarding your account, please contact customer support at <a href=\"mailto:netbybitsupport@gmail.com\" style=\"color: #f59e0b; text-decoration: none;\">netbybitsupport@gmail.com</a>.</p>\n      </div>\n    </div>\n\n    <!-- Footer -->\n    <div style=\"background-color: #09090b; padding: 24px 32px; border-top: 1px solid #27272a; text-align: center; font-size: 11px; color: #6b7280; line-height: 1.6;\">\n      <p style=\"margin: 0 0 6px 0; font-weight: 600; color: #9ca3af;\">NETBYBIT Digital Asset Management Platform</p>\n      <p style=\"margin: 0 0 10px 0;\">Official Site Contact & Admin Inbox: <span style=\"color: #d1d5db;\">netbybitsupport@gmail.com</span></p>\n      <p style=\"margin: 0; font-size: 10px; color: #4b5563;\">© 2026 NETBYBIT. All rights reserved. Encrypted SSL 256-bit Security Transport.</p>\n    </div>\n\n  </div>\n</body>\n</html>",
+      "sentAt": "2026-08-04T13:00:27.259Z",
+      "status": "Delivered",
+      "isAdminAlert": true,
+      "retryCount": 0
+    },
+    {
+      "id": "eml_1785848427259_g31v",
+      "from": "netbybitsupport@gmail.com",
+      "to": "testuser99@gmail.com",
+      "subject": "Welcome to NETBYBIT - Account Created & Verification Code",
+      "category": "Registration & Verification",
+      "body": "Hello Test User,\n\nWelcome to NETBYBIT! Your new trading account has been successfully registered.\n\nSender Email: netbybitsupport@gmail.com\nAccount Email: testuser99@gmail.com\n\nPlease verify your email address to enable all deposit and withdrawal permissions.\nYour Email Security Verification Code is: 826447\n\nIf you did not create an account on NETBYBIT, please contact customer support immediately.\n\nThank you,\nNETBYBIT Support Team",
+      "html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Welcome to NETBYBIT - Account Created & Verification Code</title>\n</head>\n<body style=\"background-color: #09090b; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px 10px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; background-color: #121215; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);\">\n    \n    <!-- Header Banner -->\n    <div style=\"background-color: #0d0d0f; padding: 24px 32px; border-bottom: 1px solid #27272a; text-align: center;\">\n      <div style=\"display: inline-flex; align-items: center; justify-content: center;\">\n        <span style=\"font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #ffffff;\">NET<span style=\"color: #f59e0b;\">BYBIT</span></span>\n      </div>\n      <span style=\"display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #71717a; margin-top: 4px;\">Institutional Digital Asset Infrastructure</span>\n    </div>\n\n    <!-- Category Header Bar -->\n    <div style=\"background-color: #18181b; padding: 12px 32px; border-bottom: 1px solid #27272a; display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 11px; font-weight: 700; text-transform: uppercase; color: #f59e0b; background: rgba(245, 158, 11, 0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.2);\">\n        Registration & Verification\n      </span>\n      <span style=\"font-size: 11px; color: #71717a;\">Aug 4, 2026</span>\n    </div>\n\n    <!-- Body Container -->\n    <div style=\"padding: 32px;\">\n      <h1 style=\"font-size: 20px; font-weight: 700; color: #ffffff; margin-top: 0; margin-bottom: 16px; line-height: 1.3;\">\n        Welcome to NETBYBIT - Account Created & Verification Code\n      </h1>\n\n      \n\n      <p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Hello Test User,</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Welcome to NETBYBIT! Your new trading account has been successfully registered.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Sender Email: netbybitsupport@gmail.com<br/>Account Email: testuser99@gmail.com</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Please verify your email address to enable all deposit and withdrawal permissions.<br/>Your Email Security Verification Code is: 826447</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">If you did not create an account on NETBYBIT, please contact customer support immediately.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Thank you,<br/>NETBYBIT Support Team</p>\n\n      \n\n      \n\n      \n\n      <div style=\"margin-top: 32px; padding-top: 20px; border-top: 1px solid #27272a; font-size: 12px; color: #9ca3af; line-height: 1.5;\">\n        <p style=\"margin: 0;\">If you have any questions or require support regarding your account, please contact customer support at <a href=\"mailto:netbybitsupport@gmail.com\" style=\"color: #f59e0b; text-decoration: none;\">netbybitsupport@gmail.com</a>.</p>\n      </div>\n    </div>\n\n    <!-- Footer -->\n    <div style=\"background-color: #09090b; padding: 24px 32px; border-top: 1px solid #27272a; text-align: center; font-size: 11px; color: #6b7280; line-height: 1.6;\">\n      <p style=\"margin: 0 0 6px 0; font-weight: 600; color: #9ca3af;\">NETBYBIT Digital Asset Management Platform</p>\n      <p style=\"margin: 0 0 10px 0;\">Official Site Contact & Admin Inbox: <span style=\"color: #d1d5db;\">netbybitsupport@gmail.com</span></p>\n      <p style=\"margin: 0; font-size: 10px; color: #4b5563;\">© 2026 NETBYBIT. All rights reserved. Encrypted SSL 256-bit Security Transport.</p>\n    </div>\n\n  </div>\n</body>\n</html>",
+      "sentAt": "2026-08-04T13:00:27.258Z",
+      "status": "Delivered",
+      "isAdminAlert": false,
+      "retryCount": 0
+    },
+    {
+      "id": "eml_1785848423489_kgam",
+      "from": "netbybitsupport@gmail.com",
+      "to": "netbybitsupport@gmail.com",
+      "subject": "Security Alert: New Login to Your NETBYBIT Account",
+      "category": "Login Security Alert",
+      "body": "Hello Platform Administrator,\n\nA new login to your NETBYBIT account was detected.\n\nAccount Email: netbybitsupport@gmail.com\nLogin Date & Time: 8/4/2026, 1:00:23 PM\nSender Address: netbybitsupport@gmail.com\n\nIf this was you, no further action is required. If you did not initiate this login, please reset your password immediately and contact netbybitsupport@gmail.com.\n\nThank you,\nNETBYBIT Support Team",
+      "html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Security Alert: New Login to Your NETBYBIT Account</title>\n</head>\n<body style=\"background-color: #09090b; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px 10px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; background-color: #121215; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);\">\n    \n    <!-- Header Banner -->\n    <div style=\"background-color: #0d0d0f; padding: 24px 32px; border-bottom: 1px solid #27272a; text-align: center;\">\n      <div style=\"display: inline-flex; align-items: center; justify-content: center;\">\n        <span style=\"font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #ffffff;\">NET<span style=\"color: #f59e0b;\">BYBIT</span></span>\n      </div>\n      <span style=\"display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #71717a; margin-top: 4px;\">Institutional Digital Asset Infrastructure</span>\n    </div>\n\n    <!-- Category Header Bar -->\n    <div style=\"background-color: #18181b; padding: 12px 32px; border-bottom: 1px solid #27272a; display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 11px; font-weight: 700; text-transform: uppercase; color: #f59e0b; background: rgba(245, 158, 11, 0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.2);\">\n        Login Security Alert\n      </span>\n      <span style=\"font-size: 11px; color: #71717a;\">Aug 4, 2026</span>\n    </div>\n\n    <!-- Body Container -->\n    <div style=\"padding: 32px;\">\n      <h1 style=\"font-size: 20px; font-weight: 700; color: #ffffff; margin-top: 0; margin-bottom: 16px; line-height: 1.3;\">\n        Security Alert: New Login to Your NETBYBIT Account\n      </h1>\n\n      \n\n      <p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Hello Platform Administrator,</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">A new login to your NETBYBIT account was detected.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Account Email: netbybitsupport@gmail.com<br/>Login Date & Time: 8/4/2026, 1:00:23 PM<br/>Sender Address: netbybitsupport@gmail.com</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">If this was you, no further action is required. If you did not initiate this login, please reset your password immediately and contact netbybitsupport@gmail.com.</p><p style=\"margin-bottom: 16px; line-height: 1.6; color: #d1d5db; font-size: 14px;\">Thank you,<br/>NETBYBIT Support Team</p>\n\n      \n\n      \n\n      \n\n      <div style=\"margin-top: 32px; padding-top: 20px; border-top: 1px solid #27272a; font-size: 12px; color: #9ca3af; line-height: 1.5;\">\n        <p style=\"margin: 0;\">If you have any questions or require support regarding your account, please contact customer support at <a href=\"mailto:netbybitsupport@gmail.com\" style=\"color: #f59e0b; text-decoration: none;\">netbybitsupport@gmail.com</a>.</p>\n      </div>\n    </div>\n\n    <!-- Footer -->\n    <div style=\"background-color: #09090b; padding: 24px 32px; border-top: 1px solid #27272a; text-align: center; font-size: 11px; color: #6b7280; line-height: 1.6;\">\n      <p style=\"margin: 0 0 6px 0; font-weight: 600; color: #9ca3af;\">NETBYBIT Digital Asset Management Platform</p>\n      <p style=\"margin: 0 0 10px 0;\">Official Site Contact & Admin Inbox: <span style=\"color: #d1d5db;\">netbybitsupport@gmail.com</span></p>\n      <p style=\"margin: 0; font-size: 10px; color: #4b5563;\">© 2026 NETBYBIT. All rights reserved. Encrypted SSL 256-bit Security Transport.</p>\n    </div>\n\n  </div>\n</body>\n</html>",
+      "sentAt": "2026-08-04T13:00:23.488Z",
+      "status": "Delivered",
+      "isAdminAlert": false,
+      "retryCount": 0
+    }
+  ],
+  "authLogs": [
+    {
+      "id": "authlog_1785848514426_fnme",
+      "timestamp": "2026-08-04T13:01:54.426Z",
+      "event": "LOGIN_SUCCESS",
+      "email": "netbybitsupport@gmail.com",
+      "reason": "Successful authentication for user ID usr_admin_primary",
+      "ip": "127.0.0.1"
+    },
+    {
+      "id": "authlog_1785848427257_fxmw",
+      "timestamp": "2026-08-04T13:00:27.257Z",
+      "event": "REGISTER_SUCCESS",
+      "email": "testuser99@gmail.com",
+      "reason": "Account successfully created with unique ID usr_1785848427257_rqr81",
+      "ip": "127.0.0.1"
+    },
+    {
+      "id": "authlog_1785848423463_baso",
+      "timestamp": "2026-08-04T13:00:23.463Z",
+      "event": "LOGIN_SUCCESS",
+      "email": "netbybitsupport@gmail.com",
+      "reason": "Successful authentication for user ID usr_admin_primary",
+      "ip": "127.0.0.1"
+    }
+  ],
+  "smsLogs": [
+    {
+      "id": "sms_1785848427258_r4wa",
+      "to": "testuser99@gmail.com",
+      "message": "[NETBYBIT Alert] Welcome Test User! Your account (testuser99@gmail.com) has been registered. Verification code: 826447",
+      "category": "Registration & Verification",
+      "provider": "NETBYBIT Cellular SMS Gateway (Simulated)",
+      "status": "Delivered",
+      "sentAt": "2026-08-04T13:00:27.258Z"
+    }
+  ]
+}

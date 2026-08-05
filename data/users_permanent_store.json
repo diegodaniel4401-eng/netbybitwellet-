@@ -1,0 +1,91 @@
+[
+  {
+    "id": "usr_admin_primary",
+    "email": "netbybitsupport@gmail.com",
+    "passwordHash": "$2b$10$JowqeJ0fySGftjsJrpeOLegtjAnehxweTWy0EfdAa8WxaDDGfDNFW",
+    "name": "Platform Administrator",
+    "username": "netbybit_admin",
+    "role": "admin",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+    "balances": {
+      "BTC": 1.25,
+      "ETH": 15.5,
+      "BNB": 45,
+      "SOL": 85,
+      "TRX": 12500,
+      "USDT_ERC20": 25000,
+      "USDT_TRC20": 15000
+    },
+    "withdrawalAddresses": {
+      "BTC": "1Fy9Up78qVeawXCLnAqcnRJrvjiXLJF21d",
+      "ETH": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+      "BNB": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+      "SOL": "7XwK3nJ5pM4q2yZ8vW9R1t6Y3u0I2o8P4s5D6f7G8h9J",
+      "TRX": "TYKh3ktyqwNMUYoo89UrMbdqjV3CUKWQ8M",
+      "USDT_ERC20": "0x400773d018e8ad3575458b5e8b11ff55078451c9",
+      "USDT_TRC20": "TYKh3ktyqwNMUYoo89UrMbdqjV3CUKWQ8M"
+    },
+    "status": "active",
+    "createdAt": "2026-08-04T13:00:23.189Z"
+  },
+  {
+    "id": "usr_demo_trader_1",
+    "email": "trader@netbybit.com",
+    "passwordHash": "$2b$10$Vt2HntPKdUgakzOs.u3pYe4s5ni5ikNZEmarQZGvdPgQXAkYUhFJi",
+    "name": "Demo Trader",
+    "username": "trader",
+    "role": "user",
+    "avatar": "",
+    "balances": {
+      "BTC": 0.5,
+      "ETH": 2,
+      "BNB": 5,
+      "SOL": 10,
+      "TRX": 1000,
+      "USDT_ERC20": 2500,
+      "USDT_TRC20": 2500
+    },
+    "withdrawalAddresses": {
+      "BTC": "",
+      "ETH": "",
+      "BNB": "",
+      "SOL": "",
+      "TRX": "",
+      "USDT_ERC20": "",
+      "USDT_TRC20": ""
+    },
+    "status": "active",
+    "createdAt": "2026-08-04T13:00:23.340Z"
+  },
+  {
+    "id": "usr_1785848427257_rqr81",
+    "email": "testuser99@gmail.com",
+    "passwordHash": "$2b$10$fQgds1NJ.O6oJLzw7U9wnew0KPIwFMIsl/QTVjhr9KxVArzzxYZKy",
+    "name": "Test User",
+    "username": "testuser99",
+    "role": "user",
+    "emailVerified": false,
+    "verificationCode": "826447",
+    "avatar": "",
+    "balances": {
+      "BTC": 0,
+      "ETH": 0,
+      "BNB": 0,
+      "SOL": 0,
+      "TRX": 0,
+      "USDT_ERC20": 0,
+      "USDT_TRC20": 0
+    },
+    "withdrawalAddresses": {
+      "BTC": "",
+      "ETH": "",
+      "BNB": "",
+      "SOL": "",
+      "TRX": "",
+      "USDT_ERC20": "",
+      "USDT_TRC20": ""
+    },
+    "status": "active",
+    "createdAt": "2026-08-04T13:00:27.257Z"
+  }
+]

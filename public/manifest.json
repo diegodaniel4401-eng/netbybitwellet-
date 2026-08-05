@@ -1,0 +1,46 @@
+{
+  "name": "NETBYBIT – Secure Mobile Crypto Wallet",
+  "short_name": "NETBYBIT",
+  "description": "Institutional Digital Asset & Secure Crypto Wallet Application for Mobile Phones and Tablets",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#09090b",
+  "theme_color": "#f59e0b",
+  "categories": ["finance", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View account balance and portfolio",
+      "url": "/?page=dashboard"
+    },
+    {
+      "name": "Deposit Funds",
+      "short_name": "Deposit",
+      "description": "Deposit crypto or fiat",
+      "url": "/?page=deposit"
+    },
+    {
+      "name": "Send Crypto",
+      "short_name": "Send",
+      "description": "Send crypto instantly",
+      "url": "/?page=send"
+    }
+  ]
+}

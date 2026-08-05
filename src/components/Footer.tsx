@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
             </div>
             <div className="flex items-center space-x-2 bg-neutral-900/60 p-2 rounded-xl border border-neutral-800">
               <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
-              <span>Dynamic Admin Deposit Vaults</span>
+              <span>Dynamic Cold Deposit Vaults</span>
             </div>
           </div>
         </div>
@@ -91,15 +91,6 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto border-t border-neutral-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 relative z-10">
         <p>© 2026 NETBYBIT Custodial Technologies Inc. All rights reserved.</p>
         <div className="flex items-center space-x-4 mt-2 sm:mt-0 font-mono text-[11px]">
-          <a
-            href="/api/download-zip"
-            download="netbybit-project.zip"
-            className="px-3 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center space-x-1.5 transition-all shadow-sm"
-            title="Download full project source code + Firebase files"
-          >
-            <span>📦 Download Project ZIP</span>
-          </a>
-          <span className="text-neutral-700">•</span>
           <span className="text-neutral-400 font-semibold">NETBYBIT Vault v2.4</span>
           <span className="text-neutral-700">•</span>
           <span className="flex items-center space-x-1 text-emerald-400">

@@ -10,6 +10,7 @@ import {
   AuditLogEntry,
   EmailNotificationPreview,
   EmailLogRecord,
+  SmsLogRecord,
 } from '../types';
 
 const API_BASE = '/api';
@@ -33,18 +34,39 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     ...(options.headers as Record<string, string>),
   };
 
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+  if (token && token !== 'undefined' && token !== 'null' && token.trim() !== '') {
+    headers['Authorization'] = `Bearer ${token.trim()}`;
   }
 
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}${endpoint}`, {
+      ...options,
+      headers,
+    });
+  } catch (err: any) {
+    throw new Error(err?.message || 'Network request failed. Please check your internet connection.');
+  }
 
-  const data = await res.json();
+  let data: any;
+  const contentType = res.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    try {
+      data = await res.json();
+    } catch {
+      data = { error: 'Invalid JSON response received from server' };
+    }
+  } else {
+    try {
+      const text = await res.text();
+      data = { error: text && text.length < 300 ? text : `Server error (${res.status} ${res.statusText})` };
+    } catch {
+      data = { error: `Server error (${res.status} ${res.statusText})` };
+    }
+  }
+
   if (!res.ok) {
-    throw new Error(data.error || 'An unexpected error occurred');
+    throw new Error(data?.error || `Request failed with status ${res.status}`);
   }
   return data as T;
 }
@@ -62,9 +84,32 @@ export const api = {
     }),
 
   login: (body: { email: string; password: string }) =>
-    request<{ token: string; user: User }>('/auth/login', {
+    request<{ token?: string; user?: User; requires2FA?: boolean; tempToken?: string; message?: string }>('/auth/login', {
       method: 'POST',
       body: JSON.stringify(body),
+    }),
+
+  verify2FA: (body: { tempToken: string; code: string }) =>
+    request<{ token: string; user: User }>('/auth/verify-2fa', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+
+  setup2FA: () =>
+    request<{ secret: string; otpauthUrl: string }>('/2fa/setup', {
+      method: 'POST',
+    }),
+
+  enable2FA: (code: string) =>
+    request<{ success: boolean; message: string; user: User }>('/2fa/enable', {
+      method: 'POST',
+      body: JSON.stringify({ code }),
+    }),
+
+  disable2FA: (code?: string, password?: string) =>
+    request<{ success: boolean; message: string; user: User }>('/2fa/disable', {
+      method: 'POST',
+      body: JSON.stringify({ code, password }),
     }),
 
   forgotPassword: (body: { email: string }) =>
@@ -82,7 +127,7 @@ export const api = {
   getMe: () => request<User>('/auth/me'),
 
   // User features
-  updateProfile: (body: { name?: string; username?: string; avatar?: string }) =>
+  updateProfile: (body: { name?: string; username?: string; avatar?: string; preferredCurrency?: string }) =>
     request<User>('/user/profile', {
       method: 'PUT',
       body: JSON.stringify(body),
@@ -115,6 +160,7 @@ export const api = {
     destinationAddress?: string;
     fromAsset?: SupportedAsset;
     toAsset?: SupportedAsset;
+    twoFactorCode?: string;
   }) =>
     request<{ success: boolean; transaction: Transaction; balances: Record<SupportedAsset, number> }>(
       '/user/transactions',
@@ -128,10 +174,41 @@ export const api = {
 
   getSupportTickets: () => request<SupportTicket[]>('/support/tickets'),
 
-  createSupportTicket: async (body: { subject: string; category?: string; priority?: string; message: string }) => {
+  createSupportTicket: async (body: { subject: string; category?: string; priority?: string; message: string; userLanguage?: string }) => {
     const res = await request<{ success: boolean; ticket: SupportTicket; message: string }>('/support/tickets', {
       method: 'POST',
       body: JSON.stringify(body),
+    });
+    return res.ticket;
+  },
+
+  // Guest Support Ticket Methods (No login required)
+  createGuestSupportTicket: async (body: { name?: string; email: string; subject?: string; category?: string; message: string; userLanguage?: string }) => {
+    const res = await request<{ success: boolean; ticket: SupportTicket; message: string }>('/support/guest/tickets', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+    return res.ticket;
+  },
+
+  getGuestSupportTicket: async (ticketId: string, email?: string) => {
+    const query = email ? `?email=${encodeURIComponent(email)}` : '';
+    const res = await request<{ success: boolean; ticket: SupportTicket }>(`/support/guest/tickets/${ticketId}${query}`);
+    return res.ticket;
+  },
+
+  replyGuestSupportTicket: async (ticketId: string, body: { message: string; email?: string }) => {
+    const res = await request<{ success: boolean; ticket: SupportTicket }>(`/support/guest/tickets/${ticketId}/reply`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+    return res.ticket;
+  },
+
+  updateTicketLanguage: async (ticketId: string, userLanguage: string) => {
+    const res = await request<{ success: boolean; ticket: SupportTicket }>(`/support/tickets/${ticketId}/language`, {
+      method: 'PUT',
+      body: JSON.stringify({ userLanguage }),
     });
     return res.ticket;
   },
@@ -229,6 +306,50 @@ export const api = {
     }),
 
   getEmailLogs: () => request<EmailLogRecord[]>('/admin/email-logs'),
+
+  sendCustomEmail: (body: {
+    recipients: string[] | 'all';
+    subject: string;
+    category: string;
+    body: string;
+    actionText?: string;
+    actionUrl?: string;
+    highlightBox?: string;
+  }) =>
+    request<{
+      success: boolean;
+      sentCount: number;
+      emailRecords: EmailLogRecord[];
+      message: string;
+    }>('/admin/email/send', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+
+  retryEmailLog: (emailId: string) =>
+    request<{ success: boolean; emailRecord: EmailLogRecord; message: string }>(`/admin/email/retry/${emailId}`, {
+      method: 'POST',
+    }),
+
+  deleteEmailLog: (emailId: string) =>
+    request<{ success: boolean; message: string }>(`/admin/email-logs/${emailId}`, {
+      method: 'DELETE',
+    }),
+
+  testSmtpConnection: () =>
+    request<{ success: boolean; message: string; details?: any }>('/admin/email/test-smtp', {
+      method: 'POST',
+    }),
+
+  getAuthLogs: () => request<any[]>('/admin/auth-logs'),
+
+  getSmsLogs: () => request<SmsLogRecord[]>('/admin/sms-logs'),
+
+  sendTestSms: (body: { recipient?: string; message: string; category?: string }) =>
+    request<{ success: boolean; smsRecord: SmsLogRecord; message: string }>('/sms/send-test', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
 
   deleteTicket: (ticketId: string) =>
     request<{ success: boolean; message: string }>(`/admin/tickets/${ticketId}`, {

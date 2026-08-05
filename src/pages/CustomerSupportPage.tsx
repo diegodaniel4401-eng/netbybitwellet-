@@ -23,7 +23,27 @@ import {
   HelpCircle,
   ShieldAlert,
   ChevronRight,
+  Globe,
+  Languages,
 } from 'lucide-react';
+
+export const SUPPORT_LANGUAGES = [
+  { code: 'English', name: 'English (US/UK)' },
+  { code: 'Spanish', name: 'Español (Spanish)' },
+  { code: 'French', name: 'Français (French)' },
+  { code: 'German', name: 'Deutsch (German)' },
+  { code: 'Portuguese', name: 'Português (Portuguese)' },
+  { code: 'Arabic', name: 'العربية (Arabic)' },
+  { code: 'Chinese', name: '中文 (Chinese Simplified)' },
+  { code: 'Japanese', name: '日本語 (Japanese)' },
+  { code: 'Russian', name: 'Русский (Russian)' },
+  { code: 'Hindi', name: 'हिन्दी (Hindi)' },
+  { code: 'Turkish', name: 'Türkçe (Turkish)' },
+  { code: 'Italian', name: 'Italiano (Italian)' },
+  { code: 'Dutch', name: 'Nederlands (Dutch)' },
+  { code: 'Swahili', name: 'Kiswahili (Swahili)' },
+  { code: 'Yoruba', name: 'Yorùbá (Yoruba)' },
+];
 
 export const CustomerSupportPage: React.FC = () => {
   const { user } = useAuth();
@@ -53,10 +73,38 @@ export const CustomerSupportPage: React.FC = () => {
   const [replyText, setReplyText] = useState('');
   const [replying, setReplying] = useState(false);
 
+  // Multilingual Customer Support Real-Time Translation State
+  const [userPreferredLang, setUserPreferredLang] = useState<string>(
+    () => localStorage.getItem('netbybit_user_lang') || 'English'
+  );
+  const [showOriginals, setShowOriginals] = useState<{ [msgId: string]: boolean }>({});
+
+  const toggleShowOriginal = (id: string) => {
+    setShowOriginals((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleUpdateLanguage = async (ticketId: string, lang: string) => {
+    setUserPreferredLang(lang);
+    localStorage.setItem('netbybit_user_lang', lang);
+    try {
+      const updatedTicket = await api.updateTicketLanguage(ticketId, lang);
+      if (updatedTicket) {
+        setTickets((prev) => prev.map((t) => (t.id === ticketId ? updatedTicket : t)));
+        setAdminTickets((prev) => prev.map((t) => (t.id === ticketId ? updatedTicket : t)));
+      }
+    } catch (err) {
+      console.error('Error updating ticket language:', err);
+    }
+  };
+
   // Staff Console Search & Filters
   const [staffEmailSearch, setStaffEmailSearch] = useState('');
   const [staffStatusFilter, setStaffStatusFilter] = useState<'all' | 'Open' | 'In Progress' | 'Closed'>('all');
   const [staffSelectedTicketId, setStaffSelectedTicketId] = useState<string | null>(null);
+
+  // Guest User State (when unauthenticated)
+  const [guestEmailInput, setGuestEmailInput] = useState(() => localStorage.getItem('netbybit_guest_email') || '');
+  const [guestNameInput, setGuestNameInput] = useState(() => localStorage.getItem('netbybit_guest_name') || '');
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -70,10 +118,22 @@ export const CustomerSupportPage: React.FC = () => {
   const fetchUserTickets = async (silent = false) => {
     if (!silent) setLoading(true);
     try {
-      const data = await api.getSupportTickets();
-      setTickets(data);
-      if (data.length > 0 && !selectedTicketId) {
-        setSelectedTicketId(data[0].id);
+      if (user) {
+        const data = await api.getSupportTickets();
+        setTickets(data);
+        if (data.length > 0 && !selectedTicketId) {
+          setSelectedTicketId(data[0].id);
+        }
+      } else {
+        const guestTicketId = localStorage.getItem('netbybit_guest_ticket_id');
+        const savedGuestEmail = localStorage.getItem('netbybit_guest_email');
+        if (guestTicketId) {
+          const guestTicket = await api.getGuestSupportTicket(guestTicketId, savedGuestEmail || undefined);
+          if (guestTicket) {
+            setTickets([guestTicket]);
+            setSelectedTicketId(guestTicket.id);
+          }
+        }
       }
     } catch (err) {
       console.error(err);
@@ -128,16 +188,39 @@ export const CustomerSupportPage: React.FC = () => {
       return;
     }
 
+    if (!user && !guestEmailInput.trim()) {
+      setNotification({ type: 'error', text: 'Email address is required for guest support chat.' });
+      return;
+    }
+
     setSubmitting(true);
     setNotification(null);
 
     try {
-      const newTicket = await api.createSupportTicket({
-        subject: subject.trim(),
-        category,
-        priority,
-        message: initialMessage.trim(),
-      });
+      let newTicket: SupportTicket;
+      if (user) {
+        newTicket = await api.createSupportTicket({
+          subject: subject.trim(),
+          category,
+          priority,
+          message: initialMessage.trim(),
+          userLanguage: userPreferredLang,
+        });
+      } else {
+        localStorage.setItem('netbybit_guest_email', guestEmailInput.trim());
+        if (guestNameInput.trim()) {
+          localStorage.setItem('netbybit_guest_name', guestNameInput.trim());
+        }
+        newTicket = await api.createGuestSupportTicket({
+          name: guestNameInput.trim(),
+          email: guestEmailInput.trim(),
+          subject: subject.trim(),
+          category,
+          message: initialMessage.trim(),
+          userLanguage: userPreferredLang,
+        });
+        localStorage.setItem('netbybit_guest_ticket_id', newTicket.id);
+      }
       
       setTickets((prev) => [newTicket, ...prev]);
       setSelectedTicketId(newTicket.id);
@@ -163,7 +246,16 @@ export const CustomerSupportPage: React.FC = () => {
 
     setReplying(true);
     try {
-      const updated = await api.replySupportTicket(ticketId, replyText.trim());
+      let updated: SupportTicket;
+      if (user || viewMode === 'staff_console') {
+        updated = await api.replySupportTicket(ticketId, replyText.trim());
+      } else {
+        const savedGuestEmail = localStorage.getItem('netbybit_guest_email') || guestEmailInput;
+        updated = await api.replyGuestSupportTicket(ticketId, {
+          message: replyText.trim(),
+          email: savedGuestEmail,
+        });
+      }
       setReplyText('');
       
       // Update local state
@@ -410,6 +502,23 @@ export const CustomerSupportPage: React.FC = () => {
                   </div>
 
                   <div className="flex items-center space-x-2">
+                    {/* Real-time Language Selector */}
+                    <div className="flex items-center space-x-1.5 bg-neutral-900 px-2.5 py-1.5 rounded-xl border border-neutral-800 text-xs shadow-inner">
+                      <Globe className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <select
+                        value={currentTicket.userLanguage || userPreferredLang}
+                        onChange={(e) => handleUpdateLanguage(currentTicket.id, e.target.value)}
+                        className="bg-transparent text-neutral-200 font-bold text-xs focus:outline-none cursor-pointer"
+                        title="Select preferred chat language"
+                      >
+                        {SUPPORT_LANGUAGES.map((lang) => (
+                          <option key={lang.code} value={lang.code} className="bg-neutral-900 text-white">
+                            {lang.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     {currentTicket.status !== 'Closed' ? (
                       <button
                         onClick={() => handleUpdateStatus(currentTicket.id, 'Closed')}
@@ -465,6 +574,10 @@ export const CustomerSupportPage: React.FC = () => {
                   {/* Reply Thread */}
                   {currentTicket.replies?.map((rep) => {
                     const isAdmin = rep.sender === 'admin';
+                    const isShowingOriginal = showOriginals[rep.id];
+                    const hasTranslation = rep.isTranslated || (rep.translatedMessage && rep.translatedMessage.trim().toLowerCase() !== rep.message.trim().toLowerCase());
+                    const displayText = isShowingOriginal ? rep.message : (rep.translatedMessage || rep.message);
+
                     return (
                       <div
                         key={rep.id}
@@ -485,7 +598,7 @@ export const CustomerSupportPage: React.FC = () => {
 
                         {/* Bubble */}
                         <div
-                          className={`p-3.5 rounded-2xl space-y-1 shadow-md ${
+                          className={`p-3.5 rounded-2xl space-y-1.5 shadow-md ${
                             isAdmin
                               ? 'bg-neutral-900 border border-amber-500/30 text-neutral-100'
                               : 'bg-gradient-to-r from-amber-600/20 to-amber-500/20 border border-amber-500/40 text-neutral-100'
@@ -499,7 +612,29 @@ export const CustomerSupportPage: React.FC = () => {
                               {new Date(rep.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </div>
-                          <p className="text-xs text-neutral-200 whitespace-pre-wrap leading-relaxed">{rep.message}</p>
+
+                          <p className="text-xs text-neutral-200 whitespace-pre-wrap leading-relaxed">{displayText}</p>
+
+                          {/* Translation Badge & Toggle */}
+                          {hasTranslation && (
+                            <div className="pt-1.5 border-t border-neutral-800/80 flex flex-wrap items-center justify-between gap-1 text-[10px]">
+                              <span className="inline-flex items-center space-x-1 text-amber-400 font-medium bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+                                <Globe className="w-3 h-3 text-amber-400" />
+                                <span>
+                                  {isShowingOriginal
+                                    ? 'Original English Version'
+                                    : `Translated automatically (${rep.targetLanguage || currentTicket.userLanguage || userPreferredLang})`}
+                                </span>
+                              </span>
+                              <button
+                                onClick={() => toggleShowOriginal(rep.id)}
+                                className="text-neutral-400 hover:text-amber-300 underline font-mono cursor-pointer transition-colors"
+                              >
+                                {isShowingOriginal ? 'Show Translation' : 'View Original (English)'}
+                              </button>
+                            </div>
+                          )}
+
                           <div className="flex items-center justify-end space-x-1 text-[10px] text-emerald-400 font-mono">
                             <CheckCheck className="w-3.5 h-3.5" />
                             <span>{rep.status || 'Delivered'}</span>
@@ -698,9 +833,26 @@ export const CustomerSupportPage: React.FC = () => {
                           #{currentStaffTicket.id}
                         </span>
                       </div>
-                      <p className="text-xs text-neutral-400 mt-0.5 font-mono">
-                        User Email: <strong className="text-amber-400">{currentStaffTicket.userEmail}</strong> ({currentStaffTicket.userName})
-                      </p>
+                      <div className="flex items-center space-x-3 text-xs text-neutral-400 mt-1 font-mono">
+                        <span>User: <strong className="text-amber-400">{currentStaffTicket.userEmail}</strong></span>
+                        <span>•</span>
+                        {/* Admin Language Target Controls */}
+                        <div className="flex items-center space-x-1.5 bg-neutral-900 px-2 py-0.5 rounded-lg border border-neutral-800">
+                          <Globe className="w-3 h-3 text-amber-400 shrink-0" />
+                          <span className="text-[10px] text-neutral-400">Target Lang:</span>
+                          <select
+                            value={currentStaffTicket.userLanguage || 'English'}
+                            onChange={(e) => handleUpdateLanguage(currentStaffTicket.id, e.target.value)}
+                            className="bg-transparent text-amber-300 font-bold text-[11px] focus:outline-none cursor-pointer"
+                          >
+                            {SUPPORT_LANGUAGES.map((lang) => (
+                              <option key={lang.code} value={lang.code} className="bg-neutral-900 text-white">
+                                {lang.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="flex items-center space-x-2">
@@ -726,20 +878,55 @@ export const CustomerSupportPage: React.FC = () => {
 
                   {/* Staff Thread Body */}
                   <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-neutral-950/60">
-                    <div className="p-3.5 bg-neutral-900 border border-neutral-800 rounded-2xl space-y-1">
-                      <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
-                        <span className="font-bold text-amber-400">{currentStaffTicket.userName} ({currentStaffTicket.userEmail})</span>
-                        <span>{new Date(currentStaffTicket.createdAt).toLocaleString()}</span>
-                      </div>
-                      <p className="text-xs text-neutral-200">{currentStaffTicket.message}</p>
-                    </div>
+                    {/* Opening Customer Ticket Message */}
+                    {(() => {
+                      const msgId = `ticket-opening-${currentStaffTicket.id}`;
+                      const isShowingOriginal = showOriginals[msgId];
+                      const hasTranslation = currentStaffTicket.isTranslated || (currentStaffTicket.translatedMessage && currentStaffTicket.translatedMessage.trim().toLowerCase() !== currentStaffTicket.message.trim().toLowerCase());
+                      const displayText = isShowingOriginal ? currentStaffTicket.message : (currentStaffTicket.translatedMessage || currentStaffTicket.message);
 
+                      return (
+                        <div className="p-3.5 bg-neutral-900 border border-neutral-800 rounded-2xl space-y-2 shadow-sm">
+                          <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
+                            <span className="font-bold text-amber-400">{currentStaffTicket.userName} ({currentStaffTicket.userEmail})</span>
+                            <span>{new Date(currentStaffTicket.createdAt).toLocaleString()}</span>
+                          </div>
+                          
+                          <p className="text-xs text-neutral-200 leading-relaxed whitespace-pre-wrap">{displayText}</p>
+
+                          {hasTranslation && (
+                            <div className="pt-2 border-t border-neutral-800 flex flex-wrap items-center justify-between gap-1 text-[10px]">
+                              <span className="inline-flex items-center space-x-1 text-emerald-400 font-medium bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                <Globe className="w-3 h-3 text-emerald-400" />
+                                <span>
+                                  {isShowingOriginal
+                                    ? `Original (${currentStaffTicket.originalLanguage || currentStaffTicket.userLanguage || 'Customer Language'})`
+                                    : `Translated automatically to English from ${currentStaffTicket.originalLanguage || currentStaffTicket.userLanguage || 'Customer Language'}`}
+                                </span>
+                              </span>
+                              <button
+                                onClick={() => toggleShowOriginal(msgId)}
+                                className="text-neutral-400 hover:text-amber-300 underline font-mono cursor-pointer transition-colors"
+                              >
+                                {isShowingOriginal ? 'Show English Translation' : 'View Original User Message'}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
+
+                    {/* Staff & User Replies */}
                     {currentStaffTicket.replies?.map((rep) => {
                       const isAdmin = rep.sender === 'admin';
+                      const isShowingOriginal = showOriginals[rep.id];
+                      const hasTranslation = !isAdmin && (rep.isTranslated || (rep.translatedMessage && rep.translatedMessage.trim().toLowerCase() !== rep.message.trim().toLowerCase()));
+                      const displayText = isShowingOriginal ? rep.message : (isAdmin ? rep.message : (rep.translatedMessage || rep.message));
+
                       return (
                         <div
                           key={rep.id}
-                          className={`p-3.5 rounded-2xl space-y-1 max-w-[85%] ${
+                          className={`p-3.5 rounded-2xl space-y-1.5 max-w-[85%] shadow-sm ${
                             isAdmin
                               ? 'ml-auto bg-amber-500/10 border border-amber-500/30 text-neutral-100'
                               : 'mr-auto bg-neutral-900 border border-neutral-800 text-neutral-100'
@@ -753,7 +940,36 @@ export const CustomerSupportPage: React.FC = () => {
                               {new Date(rep.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </div>
-                          <p className="text-xs text-neutral-200 whitespace-pre-wrap">{rep.message}</p>
+
+                          <p className="text-xs text-neutral-200 whitespace-pre-wrap leading-relaxed">{displayText}</p>
+
+                          {/* Translation Badge & Toggle for User Messages in Admin View */}
+                          {hasTranslation && (
+                            <div className="pt-1.5 border-t border-neutral-800 flex flex-wrap items-center justify-between gap-1 text-[10px]">
+                              <span className="inline-flex items-center space-x-1 text-emerald-400 font-medium bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                <Globe className="w-3 h-3 text-emerald-400" />
+                                <span>
+                                  {isShowingOriginal
+                                    ? `Original (${rep.originalLanguage || currentStaffTicket.userLanguage || 'Customer Language'})`
+                                    : `Translated automatically to English from ${rep.originalLanguage || currentStaffTicket.userLanguage || 'Customer Language'}`}
+                                </span>
+                              </span>
+                              <button
+                                onClick={() => toggleShowOriginal(rep.id)}
+                                className="text-neutral-400 hover:text-amber-300 underline font-mono cursor-pointer transition-colors"
+                              >
+                                {isShowingOriginal ? 'Show English Translation' : 'View Original User Message'}
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Admin Reply Sub-Badge showing auto-translate status */}
+                          {isAdmin && (
+                            <div className="pt-1 border-t border-amber-500/20 text-[9px] text-amber-300/80 font-mono flex items-center space-x-1">
+                              <Globe className="w-3 h-3 text-amber-400" />
+                              <span>Auto-translates to {currentStaffTicket.userLanguage || 'Customer Language'} for customer</span>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -819,6 +1035,32 @@ export const CustomerSupportPage: React.FC = () => {
                 </div>
               )}
 
+              {!user && (
+                <div className="grid grid-cols-2 gap-3 bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl">
+                  <div>
+                    <label className="block text-amber-300 font-bold text-[10px] uppercase mb-1">Your Name</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Alex"
+                      value={guestNameInput}
+                      onChange={(e) => setGuestNameInput(e.target.value)}
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-100 focus:outline-none focus:border-amber-500/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-amber-300 font-bold text-[10px] uppercase mb-1">Your Email *</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="name@example.com"
+                      value={guestEmailInput}
+                      onChange={(e) => setGuestEmailInput(e.target.value)}
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-100 focus:outline-none focus:border-amber-500/50"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div>
                 <label className="block text-neutral-300 font-medium mb-1">Subject / Issue Summary</label>
                 <input
@@ -831,13 +1073,13 @@ export const CustomerSupportPage: React.FC = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-neutral-300 font-medium mb-1">Category</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-200 focus:outline-none focus:border-amber-500/50"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-2.5 py-2 text-xs text-neutral-200 focus:outline-none focus:border-amber-500/50"
                   >
                     <option value="General Inquiry">General Inquiry</option>
                     <option value="Deposit / Withdrawal">Deposit / Withdrawal</option>
@@ -847,15 +1089,36 @@ export const CustomerSupportPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-neutral-300 font-medium mb-1">Priority Level</label>
+                  <label className="block text-neutral-300 font-medium mb-1">Priority</label>
                   <select
                     value={priority}
                     onChange={(e) => setPriority(e.target.value as any)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-200 focus:outline-none focus:border-amber-500/50 capitalize"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-2.5 py-2 text-xs text-neutral-200 focus:outline-none focus:border-amber-500/50 capitalize"
                   >
                     <option value="low">Low Priority</option>
                     <option value="medium">Medium Priority</option>
                     <option value="high">High / Urgent</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-neutral-300 font-medium mb-1 flex items-center space-x-1">
+                    <Globe className="w-3 h-3 text-amber-400" />
+                    <span>Language</span>
+                  </label>
+                  <select
+                    value={userPreferredLang}
+                    onChange={(e) => {
+                      setUserPreferredLang(e.target.value);
+                      localStorage.setItem('netbybit_user_lang', e.target.value);
+                    }}
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-2.5 py-2 text-xs text-amber-300 font-bold focus:outline-none focus:border-amber-500/50"
+                  >
+                    {SUPPORT_LANGUAGES.map((lang) => (
+                      <option key={lang.code} value={lang.code}>
+                        {lang.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

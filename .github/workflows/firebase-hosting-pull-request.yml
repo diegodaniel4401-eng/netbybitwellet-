@@ -1,29 +1,20 @@
-name: Deploy to Firebase Hosting
+name: Deploy to Firebase Hosting on PR
 
-on:
-  push:
-    branches:
-      - main
+'on': pull_request
 
 jobs:
-  build_and_deploy:
+  build_and_preview:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - run: npm install
+          cache: 'npm'
+      - run: npm ci
       - run: npm run build
-
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NETBYBIT }}'
-          channelId: live
-          projectId: netbybit-eaa90
-
-      
+          projectId: netbybit

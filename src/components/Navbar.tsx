@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { NetbybitLogo } from './NetbybitLogo';
+import { CurrencySwitcher } from './CurrencySwitcher';
+import { PWAInstallPrompt } from './PWAInstallPrompt';
 import {
   Shield,
   ArrowDownLeft,
@@ -19,6 +21,7 @@ import {
   X,
   Sparkles,
   LayoutDashboard,
+  Smartphone,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -62,8 +65,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConnectWallet }) => {
           <span className="hidden sm:inline text-neutral-700">|</span>
           <span className="hidden sm:inline text-neutral-400 text-[11px]">Institutional Multi-Network Cold Storage</span>
         </div>
-        {user?.role === 'admin' && (
-          <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3">
+          {user?.role === 'admin' && (
             <button
               onClick={() => handleNavClick('admin')}
               className="flex items-center space-x-1.5 text-amber-300 hover:text-amber-200 font-bold text-xs bg-amber-500/20 hover:bg-amber-500/30 px-3 py-1 rounded-full border border-amber-500/40 transition-all shadow-sm"
@@ -71,8 +74,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConnectWallet }) => {
               <Shield className="w-3.5 h-3.5 text-amber-400" />
               <span>Admin Dashboard</span>
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,6 +123,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConnectWallet }) => {
 
           {/* Right Action buttons */}
           <div className="hidden sm:flex items-center space-x-3">
+            {/* Currency Switcher */}
+            <CurrencySwitcher variant="header" />
+
             {user ? (
               <>
                 {/* Connect Wallet Button */}

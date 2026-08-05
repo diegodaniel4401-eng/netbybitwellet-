@@ -1,4 +1,4 @@
-export type SupportedAsset = 'BTC' | 'ETH' | 'BNB' | 'TRX' | 'USDT_ERC20' | 'USDT_TRC20';
+export type SupportedAsset = 'BTC' | 'ETH' | 'BNB' | 'SOL' | 'TRX' | 'USDT_ERC20' | 'USDT_TRC20';
 
 export interface AssetInfo {
   id: SupportedAsset;
@@ -41,6 +41,16 @@ export const ASSET_METADATA: Record<SupportedAsset, AssetInfo> = {
     iconBg: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30',
     accentColor: '#f3ba2f',
     defaultAddress: '0x400773d018e8ad3575458b5e8b11ff55078451c9',
+  },
+  SOL: {
+    id: 'SOL',
+    symbol: 'SOL',
+    name: 'Solana',
+    network: 'Solana Mainnet',
+    decimals: 9,
+    iconBg: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    accentColor: '#14F195',
+    defaultAddress: '7XwK3nJ5pM4q2yZ8vW9R1t6Y3u0I2o8P4s5D6f7G8h9J',
   },
   TRX: {
     id: 'TRX',
@@ -86,6 +96,8 @@ export interface User {
   status: 'active' | 'suspended';
   createdAt: string;
   connectedWallet?: ConnectedWallet | null;
+  preferredCurrency?: string;
+  twoFactorEnabled?: boolean;
 }
 
 export type DepositAddresses = Record<SupportedAsset, string>;
@@ -114,6 +126,10 @@ export interface TicketReply {
   sender: 'admin' | 'user';
   senderName: string;
   message: string;
+  translatedMessage?: string;
+  originalLanguage?: string;
+  targetLanguage?: string;
+  isTranslated?: boolean;
   createdAt: string;
   status?: string;
 }
@@ -126,6 +142,8 @@ export interface SupportTicket {
   subject: string;
   category: string;
   message: string;
+  translatedMessage?: string;
+  userLanguage?: string;
   status: 'Open' | 'In Progress' | 'Closed';
   createdAt: string;
   replies: TicketReply[];
@@ -193,7 +211,24 @@ export interface EmailLogRecord {
   subject: string;
   category: string;
   body: string;
+  html?: string;
   sentAt: string;
-  status: 'Sent' | 'Failed';
+  status: 'Sent' | 'Delivered' | 'Failed';
   isAdminAlert?: boolean;
+  errorMessage?: string;
+  retryCount?: number;
+  actionText?: string;
+  actionUrl?: string;
+  highlightBox?: string;
+}
+
+export interface SmsLogRecord {
+  id: string;
+  to: string;
+  message: string;
+  category: string;
+  provider: string;
+  status: 'Delivered' | 'Sent' | 'Failed';
+  errorMessage?: string;
+  sentAt: string;
 }

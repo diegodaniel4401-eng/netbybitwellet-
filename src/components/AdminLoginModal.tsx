@@ -16,6 +16,12 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
 
   if (!isOpen) return null;
 
+  const handleAutofillDefaultAdmin = () => {
+    setEmail('netbybitsupport@gmail.com');
+    setPassword('Mmadu51366414$$&&@@');
+    setError(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -49,7 +55,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-5 space-y-4">
+        <form onSubmit={handleSubmit} method="POST" action="#" className="p-5 space-y-4">
           {error && (
             <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs flex items-center space-x-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -58,21 +64,31 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
           )}
 
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Admin Email</label>
+            <label htmlFor="admin-email" className="block text-xs font-medium text-neutral-300 mb-1">Admin Email</label>
             <input
+              id="admin-email"
+              name="email"
               type="email"
+              autoComplete="username email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="netbybitsupport@gmail.com"
               className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-200 focus:outline-none focus:border-amber-500/50"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-neutral-300 mb-1">Admin Password</label>
+            <label htmlFor="admin-password" className="block text-xs font-medium text-neutral-300 mb-1">Admin Password</label>
             <input
+              id="admin-password"
+              name="password"
               type="password"
+              autoComplete="current-password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
               className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-200 focus:outline-none focus:border-amber-500/50"
             />
           </div>

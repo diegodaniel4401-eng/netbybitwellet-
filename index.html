@@ -2,11 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NETBYBIT – Secure Crypto Wallet</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12V7H5a2 2 0 0 1 0-4h14v4'/><path d='M3 5v14a2 2 0 0 0 2 2h16v-5'/><path d='M18 12a2 2 0 0 0 0 4h4v-4Z'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <title>NETBYBIT – Mobile & Tablet Crypto Wallet</title>
+
+    <!-- Web App Manifest & PWA Configuration -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#f59e0b" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Apple iOS Safari Mobile & Tablet PWA Settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="NETBYBIT" />
+    <link rel="apple-touch-icon" href="/icon-192.svg" />
+
+    <!-- Microsoft Surface / Windows Mobile Settings -->
+    <meta name="msapplication-TileColor" content="#09090b" />
+    <meta name="msapplication-TileImage" content="/icon-192.svg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/icon-192.svg" />
+
+    <!-- Service Worker Auto-Registration Script -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(reg) {
+              console.log('[PWA] ServiceWorker registered with scope:', reg.scope);
+            })
+            .catch(function(err) {
+              console.warn('[PWA] ServiceWorker registration failed:', err);
+            });
+        });
+      }
+    </script>
   </head>
-  <body>
+  <body class="bg-neutral-950 text-neutral-100 antialiased selection:bg-amber-500 selection:text-neutral-950">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
