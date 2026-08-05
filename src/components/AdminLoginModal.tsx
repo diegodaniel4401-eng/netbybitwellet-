@@ -93,6 +93,20 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
             />
           </div>
 
+          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300/90 flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-amber-400">Default Admin Account</p>
+              <p className="text-[11px] text-neutral-400">netbybitsupport@gmail.com</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleAutofillDefaultAdmin}
+              className="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 rounded-lg text-amber-300 text-[11px] font-semibold transition-all"
+            >
+              Fill Credentials
+            </button>
+          </div>
+
           <div className="pt-2 flex space-x-2">
             <button
               type="button"

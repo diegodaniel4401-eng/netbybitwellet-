@@ -169,9 +169,9 @@ export const HomePage: React.FC = () => {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-yellow-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center">
               <Shield className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-neutral-100">Dynamic Institutional Vault</h3>
+            <h3 className="text-base font-bold text-neutral-100">Dynamic Admin Vault</h3>
             <p className="text-xs text-neutral-400 leading-relaxed">
-              Deposit wallet addresses are backed by a live institutional vault structure. Updates propagate seamlessly to all user deposit screens without application restarts.
+              Deposit wallet addresses are backed by a live admin vault structure. Updates propagate seamlessly to all user deposit screens without application restarts.
             </p>
           </div>
 
@@ -191,7 +191,7 @@ export const HomePage: React.FC = () => {
             </div>
             <h3 className="text-base font-bold text-neutral-100">Integrated Support Desk</h3>
             <p className="text-xs text-neutral-400 leading-relaxed">
-              Submit support requests directly to our team. Our support desk reviews, replies, and updates ticket statuses with instant notifications.
+              Submit support requests directly to our team. Admins review, reply, and update ticket statuses with instant email notifications.
             </p>
           </div>
         </div>

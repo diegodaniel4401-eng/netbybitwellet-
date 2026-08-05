@@ -117,7 +117,7 @@ export const ProfilePage: React.FC = () => {
               className="w-full bg-neutral-950/60 border border-neutral-800/80 rounded-xl px-3 py-2.5 text-xs text-neutral-400 font-mono cursor-not-allowed"
             />
             <span className="text-[10px] text-neutral-500 mt-1 block">
-              Primary email used for account updates and official security notifications
+              Primary email used by Administrators for credit updates and official notifications
             </span>
           </div>
 

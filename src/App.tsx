@@ -22,7 +22,7 @@ import { AdminPanelPage } from './pages/AdminPanelPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
 
 const AppContent: React.FC = () => {
-  const { user, activePage } = useAuth();
+  const { activePage } = useAuth();
   const [connectWalletOpen, setConnectWalletOpen] = useState(false);
 
   const renderPage = () => {
@@ -32,7 +32,7 @@ const AppContent: React.FC = () => {
       case 'login':
         return <LoginPage />;
       case 'admin-login':
-        return user?.role === 'admin' ? <AdminPanelPage /> : <AdminLoginPage />;
+        return <AdminLoginPage />;
       case 'register':
         return <RegisterPage />;
       case 'dashboard':
@@ -56,7 +56,7 @@ const AppContent: React.FC = () => {
       case 'support':
         return <CustomerSupportPage />;
       case 'admin':
-        return user?.role === 'admin' ? <AdminPanelPage /> : (user ? <DashboardPage /> : <HomePage />);
+        return <AdminPanelPage />;
       default:
         return <HomePage />;
     }

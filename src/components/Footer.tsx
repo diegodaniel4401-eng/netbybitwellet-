@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
             </div>
             <div className="flex items-center space-x-2 bg-neutral-900/60 p-2 rounded-xl border border-neutral-800">
               <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
-              <span>Dynamic Cold Deposit Vaults</span>
+              <span>Dynamic Admin Deposit Vaults</span>
             </div>
           </div>
         </div>

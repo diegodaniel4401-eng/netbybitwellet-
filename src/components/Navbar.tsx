@@ -66,13 +66,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConnectWallet }) => {
           <span className="hidden sm:inline text-neutral-400 text-[11px]">Institutional Multi-Network Cold Storage</span>
         </div>
         <div className="flex items-center space-x-3">
-          {user?.role === 'admin' && (
+          {user?.role === 'admin' ? (
             <button
               onClick={() => handleNavClick('admin')}
               className="flex items-center space-x-1.5 text-amber-300 hover:text-amber-200 font-bold text-xs bg-amber-500/20 hover:bg-amber-500/30 px-3 py-1 rounded-full border border-amber-500/40 transition-all shadow-sm"
             >
               <Shield className="w-3.5 h-3.5 text-amber-400" />
               <span>Admin Dashboard</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => handleNavClick('admin-login')}
+              className="flex items-center space-x-1 text-neutral-400 hover:text-amber-400 text-[11px] font-medium transition-colors"
+            >
+              <Shield className="w-3 h-3 text-neutral-500" />
+              <span>Admin Portal</span>
             </button>
           )}
         </div>

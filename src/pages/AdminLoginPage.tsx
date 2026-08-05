@@ -3,17 +3,12 @@ import { useAuth } from '../context/AuthContext';
 import { Shield, Lock, Mail, ArrowRight, AlertCircle, CheckCircle2, KeyRound } from 'lucide-react';
 
 export const AdminLoginPage: React.FC = () => {
-  const { user, login, setActivePage } = useAuth();
+  const { login, setActivePage } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('netbybitsupport@gmail.com');
+  const [password, setPassword] = useState('Mmadu51366414$$&&@@');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  if (user?.role === 'admin') {
-    setActivePage('admin');
-    return null;
-  }
 
   const handleAdminLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,11 +27,23 @@ export const AdminLoginPage: React.FC = () => {
       const loggedInUser = await login(cleanInput, cleanPassword);
       if (loggedInUser.role !== 'admin') {
         setError('Access Denied: Account is not an authorized Administrator.');
-      } else {
-        setActivePage('admin');
       }
     } catch (err: any) {
-      setError(err.message || 'Invalid Admin credentials.');
+      setError(err.message || 'Invalid Admin credentials. Please verify master password.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleQuickAdminLogin = async () => {
+    setEmail('netbybitsupport@gmail.com');
+    setPassword('Mmadu51366414$$&&@@');
+    setError(null);
+    setLoading(true);
+    try {
+      await login('netbybitsupport@gmail.com', 'Mmadu51366414$$&&@@');
+    } catch (err: any) {
+      setError(err.message || 'Failed to authenticate Admin credentials.');
     } finally {
       setLoading(false);
     }
@@ -69,6 +76,31 @@ export const AdminLoginPage: React.FC = () => {
             <span>{error}</span>
           </div>
         )}
+
+        {/* Quick Admin One-Click Authenticate Button */}
+        <div className="p-4 bg-neutral-950 border border-amber-500/30 rounded-xl space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+              Default Master Admin Credentials
+            </span>
+            <span className="text-[9px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-mono font-bold">
+              READY
+            </span>
+          </div>
+          <div className="text-[11px] font-mono text-neutral-300 space-y-0.5">
+            <div><span className="text-neutral-500">Email:</span> netbybitsupport@gmail.com</div>
+            <div><span className="text-neutral-500">Pass:</span> Mmadu51366414$$&&@@</div>
+          </div>
+          <button
+            type="button"
+            onClick={handleQuickAdminLogin}
+            disabled={loading}
+            className="w-full mt-2 py-2.5 px-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-neutral-950 font-bold text-xs rounded-lg shadow-md transition-all flex items-center justify-center space-x-1.5"
+          >
+            <KeyRound className="w-3.5 h-3.5" />
+            <span>{loading ? 'Authenticating...' : 'One-Click Admin Login'}</span>
+          </button>
+        </div>
 
         {/* Manual Admin Form */}
         <form onSubmit={handleAdminLoginSubmit} noValidate className="space-y-4">

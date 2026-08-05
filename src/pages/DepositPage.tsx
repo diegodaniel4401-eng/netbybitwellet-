@@ -188,7 +188,7 @@ export const DepositPage: React.FC = () => {
             <ul className="list-disc list-inside text-neutral-400 space-y-1 text-[11px] leading-relaxed">
               <li>Minimum deposit: 0.0001 {assetInfo.symbol}</li>
               <li>Required network confirmations: 2 block confirmations</li>
-              <li>Addresses are generated dynamically by the secure vault system.</li>
+              <li>Addresses are generated dynamically by system administrators.</li>
             </ul>
           </div>
 
